@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+// use App\Http\Controllers\TodoListController;
+use App\Http\Controllers\Test1Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +20,30 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+// Route::get('/list', [TodoListController::class, 'index']);
+
+// Route::get('/test1', [Test1Controller::class, 'index']);
+Route::get('/test1', [Test1Controller::class, 'index2'])->name('root');
+Route::get('/test1/getTemp', [Test1Controller::class, 'getTemp'])->name('temperature');
+Route::get('/test1/getRain', [Test1Controller::class, 'getRain'])->name('rain');
+Route::get('/test1/getWeatherChart', [Test1Controller::class, 'getWeatherChart'])->name('weatherChart');
+
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// require __DIR__.'/auth.php';
+
+
