@@ -31,4 +31,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'line' => [
+        'client_id' => env('LINE_CHANNEL_ID'),
+        'client_secret' => env('LINE_CHANNEL_SECRET'),
+        'redirect' => env('APP_URL') . env('LINE_REDIRECT'),
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('APP_URL') . env('GOOGLE_REDIRECT'),
+    ],
 ];

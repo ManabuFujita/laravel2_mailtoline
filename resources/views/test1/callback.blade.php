@@ -85,7 +85,7 @@
 
             <div class="album py-5 bg-light">
             <div class="container">
-                test2
+                login
                 <a href="{{ route('login.line.redirect') }}">LINEでログイン</a>
 
 

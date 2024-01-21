@@ -45,6 +45,11 @@ class Test1Controller extends Controller
         // return view('test1.index', compact('swbt_lists', 'weather_rain', 'weather_forecast', 'weather_from_today'));
     }
 
+    public function login(Request $request)
+    {
+        return view('test1.callback');
+    }
+
     public function getTemp(Request $request) 
     {
         self::getSwitchbotData();
