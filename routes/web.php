@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Test1Controller;
 use App\Http\Controllers\LineLoginController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MailFilterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,7 @@ Route::get('/dashboard', function () {
 // Route::get('/linelogin', [LineLoginController::class, 'lineLogin'])->name('linelogin');
 // Route::get('/callback', [LineLoginController::class, 'callback'])->name('callback');
 
-
+Route::post('/mailfilter', [MailFilterController::class, 'check'])->name('mailfilter');
 
 
 // Route::get('/list', [TodoListController::class, 'index']);

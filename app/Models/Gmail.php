@@ -45,16 +45,23 @@ class Gmail extends Model
         'password' => 'hashed',
     ];
 
-    public function getData() 
+    public function getAllData() 
     {
         $line_id = auth()->user()->line_id;
 
-        return $this->where('line_id', $line_id)->first();
+        return $this->where('line_id', $line_id)->get();
     }
 
-    public function getToken()
+    public function getData($email) 
     {
-        $d = $this->getData();
+        $line_id = auth()->user()->line_id;
+
+        return $this->where('line_id', $line_id)->where('email', $email)->first();
+    }
+
+    public function getToken($email)
+    {
+        $d = $this->getData($email);
 
         if ($d != null)
         {

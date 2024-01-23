@@ -4,88 +4,209 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
+        @if ($gmail_list->isEmpty())
+            <div class="card my-4">
+                <div class="card-header">はじめに</div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-
-                        <p>line id: {{$line_id}}</p>
-                        <p>gmail: {{$gmail_address}}</p>
-                        <p>access token: {{$access_token}}</p>
-                        <p>refresh token: {{$refresh_token}}</p>
-                        <p>token expired: {{$token_expired}}</p>
-
-                    {{ __('You are logged in!') }}
-                    <a href="{{ route('login.google.redirect') }}">googleでログイン</a>
+                まずは、Gmailアカウントでログインしましょう！<br>
+                <br>
+                <a href="{{ route('login.google.redirect') }}">googleでログイン</a>
                 </div>
             </div>
+        @else
+            @foreach ($gmail_list as $l)
+                <div class="card my-4">
+                    <div class="card-header">{{$l->email}}</div>
+
+                    <div class="card-body">
+                        <!-- @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif -->
+
+                        <!-- <p>access token: {{$access_token}}</p>
+                        <p>refresh token: {{$refresh_token}}</p>
+                        <p>token expired: {{$token_expired}}</p> -->
+
+                        <!-- ToDo:再認証チェック -->
+
+                        <!-- 設定済みフィルター一覧 -->
+                        <p>転送設定一覧</p>
+                        @foreach ($filters as $f)
+                            <div class="card my-4">
+                                <div class="card-header">From（差出人）</div>
+
+                                <div class="card-body">
+                                {{$f->mail_from}}
+                                </div>
+                            </div>
+
+                        @endforeach
+
+                        <!-- <label for="filter-selector mb-3">選択してください</label>
+                        <select id="filter-selector mb-3">
+                            <option value="from" selected>From（差出人）</option>
+                            <option value="title">Title（件名）</option>
+                        </select> -->
+
+                        <!-- <button class="btn btn-outline-secondary dropdown-toggle" id="filter-selector" type="button" data-bs-toggle="dropdown" aria-expanded="false">選択してください</button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item" id="from">From（差出人）</li>
+                            <li class="dropdown-item" id="from">Title（件名）</li>
+                        </ul> -->
+
+                        <div class="input-group mb-3">
+                            <!-- <label class="input-group-text" for="filter-selector">選択してください</label> -->
+                            <select class="form-select" id="filter-selector">
+                                <option value="default" selected>転送設定の追加（選択してください）</option>
+                                <option value="from" @if ($errors->first('mail_from')!=null) selected @endif>・From（差出人）</option>
+                                <option value="title" @if ($errors->first('title')!=null) selected @endif>・Title（件名）</option>
+                            </select>
+                        </div>
+
+                        <!-- 差出人設定 -->
+                        <div class="filter-form"
+                        @if ($errors->first('mail_from')==null && $errors->first('title')==null)
+                            style="display: none;" 
+                            @endif
+                        >
+                        <div class="email-login-form-title align-middle">
+                                    @if ($errors->first('mail_from')!=null)
+                                    メールアドレス
+                                    @endif
+                                    @if ($errors->first('title')!=null)
+                                    件名
+                                        @endif
+                                </div>
+
+                        <form class="input-group mb-3 p-3 register-form align-middle" action="/mailfilter" method="post">
+
+
+
+
+                            {{ csrf_field() }}
+
+
+                            <div class="d-flex align-items-center p-2">
+
+
+                                <div class="email-login-form-input">
+                                    @if ($errors->first('mail_from')!=null)
+                                    <input type="email" class="form-control" name="mail_from" placeholder="abc@xxx.com" aria-label="mail_from" value="{{old('mail_from')}}">
+                                    @elseif ($errors->first('title')!=null)
+                                    <input type="text" class="form-control" name="title" placeholder="件名" aria-label="title" value="{{old('title')}}">
+                                    @else
+                                    <input type="email" class="form-control" name="mail_from" placeholder="abc@xxx.com" aria-label="mail_from" value="{{old('mail_from')}}">
+                                    @endif
+                                    
+                                </div>
+                                <input type="hidden" name="email" value="{{$l->email}}">
+
+
+
+                                <button class="btn btn-secondary" type="submit">追加</button>
+                            </div>
+                        </form>
+                            @if ($errors->first('mail_from'))
+                                <p class="validation">※{{$errors->first('mail_from')}}</p>
+                            @endif
+                            @if ($errors->first('title'))
+                                <p class="validation">※{{$errors->first('title')}}</p>
+                            @endif
+
+                        </div>
+
+                        {{$errors}}
+
+                        <!-- 件名設定 -->
+                        <!-- <form class="input-group mb-3 register-form-title" style="display: none;" action="/mailfilter" method="post">
+                            {{ csrf_field() }}
+                            <div class="email-login-form-title mb-3">件名</div>
+                            <div class="email-login-form-input mb-3">
+                                <input type="title" class="form-control" name="title" value="{{old('title')}}"></div>
+                            <input type="hidden" name="email" value="{{$l->email}}"> -->
+
+                            @if ($errors->first('title'))   <!-- ここ追加 -->
+                                <!-- <p class="validation">※{{$errors->first('title')}}</p> -->
+                            @endif
+
+                            <!-- <button type="submit">追加</button>
+                        </form> -->
+
+
+                    </div>
+                </div>
+            @endforeach
+
+            <a href="{{ route('login.google.redirect') }}">googleアカウントを追加</a>
+        @endif
+
         </div>
     </div>
 </div>
-aaa
 
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script type="module">
 
-<meta name="google-signin-client_id" content="299041316552-8lv9u0ngcq7jn26btn6nhdcepnu3lcu8.apps.googleusercontent.com">
-
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
-
+    // $(function(){
+    //     $('.register-form-title').hide();
+    // });
 
 
-<script>
-        function onSignIn(googleUser) {
-            console.log('onSignIn.');
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.disconnect();
+    $("#filter-selector").change(function() {
+		// value値を取得
+		const str1 = $("#filter-selector").val();
+        // $("#span4").text(str1);
 
-            // Get ID Token
-            var id_token = googleUser.getAuthResponse().id_token;
+        switch (str1) {
+            case "from":
+                // $('.register-form-title').animate({ height: 'hide' }, 'slow');
+                // $('.register-form-from').animate({ height: 'show' }, 'slow');
+                showSelectorFrom();
+                break;
 
-            // Send ID Token to Backend
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/signin');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                if(xhr.readyState == 4 && xhr.status == 200){
-                    // Redirect
-                    window.location.href = 'http://localhost:8080/userinfo';
-                }else{
-                    console.log('Error');
-                }
-            };
-            xhr.send('credential=' + id_token);
+            case "title":
+                // $('.register-form-from').animate({ height: 'hide' }, 'slow');
+                // $('.register-form-title').animate({ height: 'show' }, 'slow');
+                showSelectorTitle();
+                break;
+
+            default:
+                $('.filter-form').animate({ height: 'hide' }, 'slow');
+                break;
         }
-    </script>
-<!--  -->
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+	});
 
-<div id="g_id_onload"
-     data-client_id="299041316552-8lv9u0ngcq7jn26btn6nhdcepnu3lcu8.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-login_uri="http://127.0.0.1:8000/login/google/callback"
-     data-prompt_parent_id='g_id_onload'
-  style='position: fixed; top: 76px; right: 16px;'
-     data-auto_select="true"
-     data-itp_support="true">
-</div>
+    function showSelectorFrom() {
+        $('.filter-form').stop().animate({ height: 'hide' }, 'slow', 'swing', function(){
 
-<div class="g_id_signin"
-     data-type="standard"
-     data-shape="rectangular"
-     data-theme="outline"
-     data-text="signin_with"
-     data-size="large"
-     data-logo_alignment="left">
-</div>
+            $('.email-login-form-title').text("メールアドレス");
 
-bbb
+            $('.form-control').attr('type', "email");
+            $('.form-control').attr('name', "mail_from");
+            $('.form-control').attr('placeholder', "abc@xxx.com");
+
+            $('.filter-form').animate({ height: 'show' }, 'slow', 'swing');
+        });
+
+
+    }
+
+    function showSelectorTitle() {
+        $('.filter-form').stop().animate({ height: 'hide' }, 'slow', 'swing', function(){
+
+            $('.email-login-form-title').text("件名");
+
+            $('.form-control').attr('type', "text");
+            $('.form-control').attr('name', "title");
+            $('.form-control').attr('placeholder', "件名");
+
+            $('.filter-form').animate({ height: 'show' }, 'slow', 'swing');
+        });
+    }
+
+</script>
 
 @endsection

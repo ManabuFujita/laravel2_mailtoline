@@ -105,9 +105,9 @@ class LoginController extends Controller
 
 
         $user = Gmail::updateOrCreate(
-            ['line_id' => $line_user->line_id],
-            ['email' => $google_user->email,
-            'name' => $google_user->name,
+            ['line_id' => $line_user->line_id, 
+            'email' => $google_user->email],
+            ['name' => $google_user->name,
             'access_token' => $google_user->token,
             'refresh_token' => $google_user->refreshToken,
             'expires_in' => $google_user->expiresIn,

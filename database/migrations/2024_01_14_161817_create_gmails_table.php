@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('gmails', function (Blueprint $table) {
             $table->id();
-            $table->string('line_id')->unique();
-            $table->string('email')->unique()->nullable();
+            $table->string('line_id');
+            $table->string('email')->nullable();
             $table->string('name')->nullable();;
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->timestamp('created')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->unique(['line_id', 'email']);
         });
     }
 

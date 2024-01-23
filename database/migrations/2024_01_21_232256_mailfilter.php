@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sendlogs', function (Blueprint $table) {
+        Schema::create('mailfilters', function (Blueprint $table) {
             $table->id();
             $table->string('line_id');
             $table->string('email');
-            $table->string('mail_id');
-            $table->timestamp('senddate');
-            $table->string('title')->nullable();
+            $table->integer('no')->nullable();
             $table->string('mail_from')->nullable();
-            $table->string('body')->nullable();
+            $table->string('title')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unique(['line_id', 'email', 'mail_id']);
+            // $table->unique(['line_id', 'email', 'no']);
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sendlogs');
+        Schema::dropIfExists('mailfilters');
     }
 };
