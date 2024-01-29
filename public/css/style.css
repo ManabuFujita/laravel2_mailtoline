@@ -84,6 +84,178 @@
     font-size:1rem;
 } */
 
-span.title {
+body {
+  background-color: whitesmoke;
+}
+
+.card {
+  background-color: whitesmoke;
+}
+
+.mail-list {
+  background-color: whitesmoke;
+}
+
+/* .filter-col-value {
+  background-color: whitesmoke;
+} */
+
+nav.navbar {
+  background-color: #80BCBD !important;
+
+  .navbar-brand {
+    color: white;
+  }
+
+  .nav-link {
+    color: white !important;
+  }
+}
+
+.card-mail-list {
+  .card-header {
+    background-color: #80BCBD;
+    color: whitesmoke;
+  }
+}
+
+.card-filter {
+  .card-header {
+    background-color: #AAD9BB;
+    color: black;
+    /* color: whitesmoke; */
+  }
+
+
+
+  .filter-col-value {
+    background-color: #e9ecef;
+
+    input {
+      background-color: #e9ecef;
+      border: none;
+    }
+  }
+
+  button {
+    width: 40px;
+    /* text-align: right; */
+    padding: 0px;
+    margin-right: 8px;
+  }
+}
+
+.filter-col-key {
+  background-color: #D5F0C1 !important;
+  color: black !important;
+}
+
+
+.card-add {
+
+  .card-add-header {
+    position: relative;
+    display: block;
+    padding-left: 32px;
+
+    background-color: whitesmoke;
+    color: black;
+    border-color: #D5F0C1 !important;
+
+    &:hover {
+      cursor: pointer;
+      background-color: lightgray;
+    }
+
+
+    /* + マーク */
+    .plus-button {
+      position: absolute;
+      top: 25%;
+      left: 1%;
+      width: 18px;
+      height: 18px;
+      transform-origin: center center;
+      transition-duration: 0.2s;
+
+      /* 丸くする */
+      /* background-color: blue;
+      border-radius: 50%; */
+    
+      &:before,
+      &:after {
+        content: "";
+        background-color: #80BCBD;
+        border-radius: 10px;
+        width: 18px;
+        height: 4px;
+        position: absolute;
+        top: 7px;
+        left: 0;
+        transform-origin: center center;
+      }
+      &:before {
+        width: 4px;
+        height: 18px;
+        top: 0;
+        left: 7px;
+      }
+    }
+
+    &.is-active {
+      background-color: #F9F7C9;
+      color: black;
+      
+      .plus-button {
+
+        -webkit-transform: rotate(-180deg);
+        transform: rotate(-180deg);
+
+        &::before {
+          content: none;
+          /* background-color: whitesmoke; */
+        }
+        &::after {
+          /* background-color: whitesmoke; */
+        }
+      }
+    }
+  }
+
+  .col-button {
+    width: 100px;
+    height: 40px;
+  }
+
+  button {
+    width: 100%;
+    height: 100%;
+  }
 
 }
+
+
+.input-group {
+  padding-left: 0;
+
+  .filter-col-key {
+    border-color: #B6BBC4;
+    background-color: #B6BBC4;
+    /* font-weight: bold; */
+    color: whitesmoke;
+    padding-left: 16px;
+  }
+
+  .form-control {
+    border-color: #B6BBC4;
+  }
+}
+
+
+.test-term {
+  background-color: #e9ecef;
+}
+
+
+
+

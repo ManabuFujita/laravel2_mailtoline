@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gmails', function (Blueprint $table) {
+        Schema::create('mail_gmails', function (Blueprint $table) {
             $table->id();
             $table->string('line_id');
             $table->string('email')->nullable();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('access_token')->nullable();
             $table->string('refresh_token')->nullable();
             $table->integer('expires_in')->nullable();
-            $table->string('id_token')->nullable();
+            $table->text('id_token')->nullable();
             $table->timestamp('created')->nullable();
             $table->rememberToken();
             $table->timestamps();
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gmails');
+        Schema::dropIfExists('mail_gmails');
     }
 };

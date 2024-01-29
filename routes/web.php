@@ -26,10 +26,14 @@ Route::prefix('login')->name('login.')->group(function() {
     Route::get('/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line.redirect');
     Route::get('/line/callback', [LoginController::class, 'handleLineProviderCallback'])->name('line.callback');
     Route::get('/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('google.redirect');
+    Route::post('/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('google.redirect');
     Route::get('/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('google.callback');
+    Route::post('/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('google.callback');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Route::get('/', function () {
     return redirect('login/line/redirect');
@@ -44,8 +48,8 @@ Route::get('/dashboard', function () {
 // Route::get('/linelogin', [LineLoginController::class, 'lineLogin'])->name('linelogin');
 // Route::get('/callback', [LineLoginController::class, 'callback'])->name('callback');
 
-Route::post('/mailfilter', [MailFilterController::class, 'check'])->name('mailfilter');
-
+Route::post('/mailfilter', [MailFilterController::class, 'button'])->name('mailfilter');
+Route::post('/mailfilter/delete', [MailFilterController::class, 'delete'])->name('mailfilter.delete');
 
 // Route::get('/list', [TodoListController::class, 'index']);
 

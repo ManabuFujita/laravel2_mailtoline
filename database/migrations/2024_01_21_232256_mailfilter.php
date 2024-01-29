@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('email');
             $table->integer('no')->nullable();
             $table->string('mail_from')->nullable();
-            $table->string('title')->nullable();
+            $table->string('subject')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
-            // $table->unique(['line_id', 'email', 'no']);
+            $table->unique(['line_id', 'email', 'mail_from', 'subject']);
         });
     }
 

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Gmail;
+use App\Models\Mail_gmail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+
+use Google_Client;
 
 class LoginController extends Controller
 {
@@ -92,19 +94,41 @@ class LoginController extends Controller
         $line_user = auth()->user();
 
         // dd($line_user);
+
+        // dd($_COOKIE['g_csrf_token']);
+        // dd($request->input('g_csrf_token'));
+
+        // if ($_COOKIE['g_csrf_token'] !== $request->input('g_csrf_token')) {
+        //     // Invalid CSRF token
+        //     return back();
+        // }
+
+        // $idToken = $request->input('credential'); 
+
+        // $client = new Google_Client([
+        //     'client_id' => env('GOOGLE_CLIENT_ID')
+        // ]);
+        
+        // $payload = $client->verifyIdToken($idToken);
+        
+        // if (!$payload) {
+        //     // Invalid ID token
+        //     return back();
+        // }
+
+
+        // dd($client->authorize());
+        
+        // dd($payload);
+
+
+        // dd($request);
         
         $google_user = Socialite::driver('google')->stateless()->user();
         // $google_user = Socialite::driver('google')->user();
 
-        // dd($google_user);
 
-        // dd($request);
-
-        // dd($google_user->token);
-
-
-
-        $user = Gmail::updateOrCreate(
+        $user = Mail_gmail::updateOrCreate(
             ['line_id' => $line_user->line_id, 
             'email' => $google_user->email],
             ['name' => $google_user->name,

@@ -19,7 +19,7 @@ class Mailfilter extends Model
         'line_id',
         'email',
         'mail_from',
-        'title',
+        'subject',
     ];
 
     /**
@@ -48,22 +48,45 @@ class Mailfilter extends Model
         return $this->where('line_id', $line_id)->where('email', $email)->get();
     }
 
-    public function existsFilter($email, $mailFrom) 
+    public function existsFilter($email, $mailFrom, $subject) 
     {
         $line_id = auth()->user()->line_id;
 
-        return $this->where('line_id', $line_id)->where('email', $email)->where('mail_from', $mailFrom)->first() == null;
+        return $this->where('line_id', $line_id)
+            ->where('email', $email)
+            ->where('mail_from', $mailFrom ?? '')
+            ->where('subject', $subject ?? '')
+            ->first() != null;
     }
 
-    public function setFilterMailFrom($email, $mailFrom) 
+    public function setFilter($email, $mailFrom, $subject) 
     {
         $line_id = auth()->user()->line_id;
 
         return $this->create([
             'line_id' => $line_id,
             'email' => $email,
-            'mail_from' => $mailFrom,
+            'mail_from' => $mailFrom ?? '',
+            'subject' => $subject ?? '',
         ]);
+    }
+
+    public function deleteFilter($email, $mailFrom, $subject) 
+    {
+        $line_id = auth()->user()->line_id;
+
+        // dd([
+        //     'line_id' => $line_id,
+        //     'email' => $email,
+        //     'mail_from' => $mailFrom,
+        //     'subject' => $subject,
+        // ]);
+
+        return $this->where('line_id', $line_id)
+            ->where('email', $email)
+            ->where('mail_from', $mailFrom ?? '')
+            ->where('subject', $subject ?? '')
+            ->delete();
     }
 
 }

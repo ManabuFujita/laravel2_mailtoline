@@ -99,6 +99,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'subject' => [
+            'required_if'          => ':otherが:valueの時、:attributeは必須です。',
+        ]
     ],
 
     /*
@@ -113,7 +116,15 @@ return [
     */
 
     'attributes' => [
-        'email' => 'メールアドレス',
+        // 'email' => 'メールアドレス',
+        'mail_from' => 'From',
+        'subject' => 'Subject',
+    ],
+
+    'values' => [
+        'mail_from' => [
+            '' => '空欄'
+        ],
     ],
 
 ];

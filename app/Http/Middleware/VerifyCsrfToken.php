@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'https://localhost/laravel2_mailtoline/public/login/google/*',
     ];
 }
