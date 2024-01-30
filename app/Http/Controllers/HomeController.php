@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        require_once 'C:\xampp\htdocs\laravel2_mailtoline\vendor\autoload.php';
+        require_once base_path('vendor/autoload.php'); // 本番はLinuxのため、\でなく/で指定する
 
 
 
@@ -67,8 +67,7 @@ class HomeController extends Controller
                 $token = $gmail->getToken($gmail_address);
 
 
-                // $client = new Google_Client();
-                // $client->setAuthConfig('C:\xampp\htdocs\laravel2_mailtoline\credentials.json');
+
 
                 // $client->addScope(Google_Service_Drive::DRIVE_METADATA_READONLY);
                 // $client->setScopes(Google_Service_Gmail::GMAIL_READONLY);

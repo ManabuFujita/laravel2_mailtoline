@@ -9,6 +9,7 @@ use App\Models\Mailfilter;
 use App\Models\Mail_gmail;
 use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 // use Google_Client;
 // use Google_Service_Gmail;
 use Google\Client;
@@ -178,10 +179,22 @@ class MailFilterController extends Controller
                 $to_key = array_search('To', array_column($headers, 'name'));
                 $to = $headers[$to_key]->value;
 
+                    // $date_str = "Fri, 26 Jan 2024 02:15:18 +0000 (UTC)";
+
+                $date = preg_replace('/\s\(\w{3}\)/', '', $date); // " (UTC)"を除く
+
+                    // $date_str = "Fri, 26 Jan 2024 02:15:18 +0000";
+                    // dd([$date, 
+                    //     DateTime::createFromFormat(DateTimeInterface::RFC2822, $date),
+                    //     $headers,
+
+                    //     DateTime::createFromFormat("D, d M Y H:i:s O", $date_str),
+                    // ]);
+
                 // 配列にセット
                 array_push($filter_test_list, [
                     'subject' => $subject,
-                    'date' => $date = DateTime::createFromFormat("D, d M Y H:i:s O", $date)->format('Y/m/d H:i:s'),
+                    'date' => DateTime::createFromFormat(DateTimeInterface::RFC2822, $date)->format('Y/m/d H:i:s'),
                     'from' => $from,
                     'to' => $to,
                 ]);

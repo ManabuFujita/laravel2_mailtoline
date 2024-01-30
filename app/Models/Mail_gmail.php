@@ -145,7 +145,7 @@ class Mail_gmail extends Model
         $client->setApplicationName('Gmail API PHP Quickstart');
         $client->setScopes(Google_Service_Gmail::GMAIL_READONLY);
         // $client->setAuthConfig('credentials.json');
-        $client->setAuthConfig('C:\xampp\htdocs\laravel2_mailtoline\credentials.json');
+        $client->setAuthConfig(base_path('credentials.json'));
         $client->setAccessType('offline');
         $client->setPrompt('select_account consent');
 
