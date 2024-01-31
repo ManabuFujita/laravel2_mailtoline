@@ -63,7 +63,7 @@ class LoginController extends Controller
     {
         $this->checkAuth();
 
-        $line_user = Socialite::driver('line')->user();
+        $line_user = Socialite::driver('line')->stateless()->user();
 
         $user = User::firstOrCreate(
             ['line_id' => $line_user->id],
