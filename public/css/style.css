@@ -83,9 +83,26 @@
     margin: 30px 0;
     font-size:1rem;
 } */
+html {
+  font-family: "Meiryo", sans-serif;
+  height: 100%;
+}
 
 body {
+  font-size: 16px;
+
   background-color: whitesmoke;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+footer {
+  grid-row-start: 2;
+  grid-row-end: 3;
+
+  background-color: #80BCBD;
+  color: whitesmoke !important;
 }
 
 .card {
@@ -101,7 +118,7 @@ body {
 } */
 
 nav.navbar {
-  background-color: #80BCBD !important;
+  background-color: #80BCBD;
 
   .navbar-brand {
     color: white;
@@ -259,3 +276,74 @@ nav.navbar {
 
 
 
+/* documentページ */
+.document {
+  .row {
+    padding-top: 30px;
+    padding-bottom: 16px;
+  }
+  p {
+    padding-left: 24px;
+  }
+  ul, ol {
+    padding-left: 46px;
+  }
+
+}
+
+
+
+/*  */
+
+/* body {
+  font-family: "Meiryo", sans-serif;
+} */
+/* .container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+} */
+/* .logo {
+  text-align: center;
+}
+.logo img {
+  width: 200px;
+}
+.headline {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin: 20px 0;
+}
+.subhead {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555555;
+  margin: 10px 0;
+}
+.content {
+  font-size: 16px;
+  color: #666666;
+  line-height: 1.5;
+}
+/* .content ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+.content li {
+  margin-bottom: 5px;
+} */
+.button {
+  display: block;
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #00b900;
+  border-radius: 10px;
+  margin: 20px auto;
+} */

@@ -18,9 +18,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{ asset('img/mail-icon-white.png') }}" alt="icon" style="width: 30px;">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -37,17 +38,12 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <!-- @if (Route::has('login/line/redirect'))
+                            guest
+                            @if (Route::has('login.line'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login.line.redirect') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login.line') }}">{{ __('Login') }}</a>
                                 </li>
-                            @endif -->
-
-                            <!-- @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif -->
+                            @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
@@ -55,6 +51,7 @@
                                 </li>
                             @endif
                         @else
+                            auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -78,9 +75,40 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 content">
             @yield('content')
         </main>
     </div>
+
+    <footer class="footer mt-auto py-3 navbar-expand-md navbar-light shadow-sm">
+        <div class="container text-muted">
+
+            <div class="col">
+                <div class="row ">
+                    <a class="nav-link" href="{{ route('top') }}">Home</a>
+                </div>
+                <div class="row">
+                    <a class="nav-link" href="{{ route('page.view', ['page' => 'terms-of-service']) }}">利用規約</a>
+                </div>
+
+                <div class="row">
+                    <a class="nav-link" href="{{ route('page.view', ['page' => 'privacy-policy']) }}">プライバシーポリシー</a>
+                </div>
+
+            </div>
+            <!-- <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login.line') }}">{{ __('Login') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login.line') }}">プライバシーポリシー</a>
+                </li>
+            </ul> -->
+        </div>
+        <div class="text-center">
+            <small>&copy; {{ config('app.name', 'Laravel') }} 2024</small>
+        </div>
+
+    </footer>
 </body>
 </html>

@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 // use App\Http\Controllers\TodoListController;
 use App\Http\Controllers\Test1Controller;
 use App\Http\Controllers\LineLoginController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MailFilterController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,23 +41,49 @@ Route::get('/build/{any}', function ($any) {
 
 
 
+
+// Route::get('login/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line.login');
+
+
+
+
 Route::prefix('login')->name('login.')->group(function() {
-    Route::get('/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line.redirect');
-    Route::get('/line/callback', [LoginController::class, 'handleLineProviderCallback'])->name('line.callback');
+    Route::get('/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line');
+    Route::get('/line/callback', [LoginController::class, 'handleLineProviderCallback']);
+    
     Route::get('/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('google.redirect');
     Route::post('/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('google.redirect');
     Route::get('/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('google.callback');
     Route::post('/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('google.callback');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::post('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+
+
+// Route::get('/register', function () {
+//     return redirect('login/line/redirect');
+// });
+
+// Route::get('/welcome', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::resource('page', PageController::class, ['only' => [
+//     'index', 'show'
+// ]]);
+
+Route::get('page/{page}', [PageController::class, 'show'])
+    ->name('page.view')
+    ->missing(function (Request $request) {
+        return redirect('/');
+    });
+
 
 
 Route::get('/', function () {
-    return redirect('login/line/redirect');
-    // return view('line.redirec');
-});
+    return view('welcome');
+
+    // return redirect('login/line/redirect');
+})->name('top');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -90,5 +118,6 @@ Route::middleware('auth')->group(function () {
 // require __DIR__.'/auth.php';
 
 Route::fallback(function() {
-    return view('route.error');
+    // return view('route.error');
+    return redirect('/');
 });

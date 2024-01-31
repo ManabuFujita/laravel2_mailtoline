@@ -127,7 +127,8 @@ class MailFilterController extends Controller
         $subject = $request-> subject;
 
         // 昨日の対象メール数を取得
-        $filter = 'to:'.$email;
+        // $filter = 'to:'.$email; // 自分のメールボックスでも、Toが自分とは限らないため、Toは設定しない
+        $filter = '';
         if ($mailFrom != null)
         {
             $filter .= ' from:' . $mailFrom;
