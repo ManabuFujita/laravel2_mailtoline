@@ -45,14 +45,19 @@ class Mailfilter extends Model
     {
         $line_id = auth()->user()->line_id;
 
-        return $this->where('line_id', $line_id)->where('email', $email)->get();
+        return $this
+            ->where('line_id', $line_id)
+            ->where('email', $email)
+            ->orderBy('created_date', 'asc')
+            ->get();
     }
 
     public function existsFilter($email, $mailFrom, $subject) 
     {
         $line_id = auth()->user()->line_id;
 
-        return $this->where('line_id', $line_id)
+        return $this
+            ->where('line_id', $line_id)
             ->where('email', $email)
             ->where('mail_from', $mailFrom ?? '')
             ->where('subject', $subject ?? '')
