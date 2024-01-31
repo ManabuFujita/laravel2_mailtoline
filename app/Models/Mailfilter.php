@@ -48,7 +48,7 @@ class Mailfilter extends Model
         return $this
             ->where('line_id', $line_id)
             ->where('email', $email)
-            ->orderBy('created_date', 'asc')
+            ->orderBy('created_at', 'asc')
             ->get();
     }
 
