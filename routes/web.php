@@ -44,7 +44,11 @@ Route::get('/build/{any}', function ($any) {
 
 // Route::get('login/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line.login');
 
-
+// Route::group(['middleware' => 'auth'], function() {
+//     Route::any('login/line/callback', function() {
+//         return view('welcome');
+//     });
+// });
 
 
 Route::prefix('login')->name('login.')->group(function() {

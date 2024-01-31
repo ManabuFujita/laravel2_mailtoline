@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 use Google_Client;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -51,7 +52,9 @@ class LoginController extends Controller
      */
     public function redirectToLineProvider()
     {
-        $this->checkAuth();
+        if (Auth::check()) { // ログイン済みならトップに飛ばす
+            return redirect('/home');
+        }
 
         return Socialite::driver('line')->redirect();
     }
@@ -61,7 +64,9 @@ class LoginController extends Controller
      */
     public function handleLineProviderCallback(Request $request)
     {
-        $this->checkAuth();
+        if (Auth::check()) { // ログイン済みならトップに飛ばす
+            return redirect('/home');
+        }
 
         $line_user = Socialite::driver('line')->stateless()->user();
 
@@ -74,11 +79,17 @@ class LoginController extends Controller
         return $this->sendLoginResponse($request);
     }
 
-    private function checkAuth()
-    {
-        // 認証済みならhomeへ遷移
-        $this->middleware('guest')->except('logout');
-    }
+    // private function checkAuth(Request $request)
+    // {
+    //     // 認証済みならhomeへ遷移
+    //     // $this->middleware('guest')->except('logout');
+
+    //     // dd(Auth::check());
+
+    //     if (Auth::check()) { // ログイン済みならトップに飛ばす
+    //         return redirect('/home');
+    //     }
+    // }
 
     // Google
     public function redirectToGoogleProvider()

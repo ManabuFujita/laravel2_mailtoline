@@ -192,10 +192,18 @@
 
                                                 <div class="container mt-3">
                                                     <div class="row input-group input-group-sm mb-3">
-                                                        <label class="input-group-text test-term col" for="start">抽出期間（確認用）</label>
-                                                        <input type="date" id="start" class="form-control col" name="term_start" value="{{ old('term_start', $oneMonthAgo->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" /> 
-                                                        <label class="input-group-text test-term col-1" for="end">～</label>
-                                                        <input type="date" id="end" class="form-control col" name="term_end" value="{{ old('term_end', $today->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" /> 
+                                                        <div class="col px-0">
+                                                            <label class="input-group-text test-term" for="start">抽出期間（確認用）</label>
+                                                        </div>                                                        
+                                                        <div class="col px-0">
+                                                            <input type="date" id="start" class="form-control" name="term_start" value="{{ old('term_start', $oneMonthAgo->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" /> 
+                                                        </div>                                                        
+                                                        <div class="col px-0" style="max-width: 40px;">
+                                                            <label class="input-group-text test-term" for="end">～</label>
+                                                        </div>
+                                                        <div class="col px-0">
+                                                            <input type="date" id="end" class="form-control" name="term_end" value="{{ old('term_end', $today->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" /> 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
