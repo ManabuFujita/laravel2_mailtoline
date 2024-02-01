@@ -57,7 +57,7 @@ class LoginController extends Controller
         }
 
         return Socialite::driver('line')
-            ->with(['bot_prompt' => 'normal'])
+            // ->with(['bot_prompt' => 'normal'])
             ->redirect();
     }
 
