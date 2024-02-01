@@ -56,7 +56,9 @@ class LoginController extends Controller
             return redirect('/home');
         }
 
-        return Socialite::driver('line')->redirect();
+        return Socialite::driver('line')
+            ->with(['bot_prompt' => 'normal'])
+            ->redirect();
     }
 
     /**
@@ -64,11 +66,13 @@ class LoginController extends Controller
      */
     public function handleLineProviderCallback(Request $request)
     {
-        if (Auth::check()) { // ログイン済みならトップに飛ばす
-            return redirect('/home');
-        }
+        // if (Auth::check()) { // ログイン済みならトップに飛ばす
+        //     return redirect('/home');
+        // }
 
         $line_user = Socialite::driver('line')->stateless()->user();
+
+        // dd($line_user);
 
         $user = User::firstOrCreate(
             ['line_id' => $line_user->id],
@@ -95,9 +99,9 @@ class LoginController extends Controller
     public function redirectToGoogleProvider()
     {
         return Socialite::driver('google')
-                ->with(["access_type" => "offline", "prompt" => "consent select_account"])
-                ->scopes(["https://www.googleapis.com/auth/gmail.readonly"])
-                ->redirect();
+            ->with(["access_type" => "offline", "prompt" => "consent select_account"])
+            ->scopes(["https://www.googleapis.com/auth/gmail.readonly"])
+            ->redirect();
     }
 
     public function handleGoogleProviderCallback(Request $request)
