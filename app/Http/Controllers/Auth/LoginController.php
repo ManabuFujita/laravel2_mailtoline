@@ -141,7 +141,12 @@ class LoginController extends Controller
         // dd($payload);
 
 
-        // dd($request);
+
+        // 認証途中でキャンセルしたりした場合、エラーとなる
+        if ($request->error != null)
+        {
+            return redirect('home');
+        }
         
         $google_user = Socialite::driver('google')->stateless()->user();
         // $google_user = Socialite::driver('google')->user();
