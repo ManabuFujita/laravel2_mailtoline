@@ -255,6 +255,8 @@
                 </div>
             @endforeach
 
+            <a href="https://line.me/R/oaMessage/%40795qucfw">line</a>
+
             <!-- 新規メールアドレス追加 -->
             <div class="card add-email card-add card-mail-list my-4">
                 <div class="card-header card-add-header">
