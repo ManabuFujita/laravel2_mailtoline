@@ -74,9 +74,13 @@ class LoginController extends Controller
 
         // dd($line_user);
 
-        $user = User::firstOrCreate(
+        $user = User::updateOrCreate(
             ['line_id' => $line_user->id],
-            ['name' => $line_user->name]
+            ['name' => $line_user->name,
+            'access_token' => $line_user->token,
+            'refresh_token' => $line_user->refreshToken,
+            'expires_in' => $line_user->expiresIn,
+            ],
         );
 
         $this->guard()->login($user, true);

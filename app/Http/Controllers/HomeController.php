@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mail_gmail;
 use App\Models\Mailfilter;
+use App\Models\User;
 
 use Google;
 use Google_Client;
@@ -14,6 +15,7 @@ use Google_Service_Calendar_Channel;
 use Google_Service_Exception;
 use Google_Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Http;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -43,6 +45,24 @@ class HomeController extends Controller
 
         $lineId = auth()->user()->line_id;
 
+
+        // Lineの友達情登録報取得
+        $url = 'https://api.line.me/friendship/v1/status';
+        // $response = Http::get($url);
+
+        $user = new User();
+        
+            
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $user->getAccessToken(),
+            ])->get($url);
+
+            
+        // dd($response->json()['friendFlag']);
+        $lineFriendFlag = $response->json()['friendFlag'];
+
+
+        // gmailリストを取得
         $access_token = '';
         $refresh_token = '';
         $token_expired = false;
@@ -176,6 +196,6 @@ class HomeController extends Controller
         // dd($filterList);
         // $token = $gmail_list->token;
 
-        return view('home', compact('gmailList', 'access_token', 'refresh_token', 'token_expired', 'filterList'));
+        return view('home', compact('gmailList', 'access_token', 'refresh_token', 'token_expired', 'filterList', 'lineFriendFlag'));
     }
 }

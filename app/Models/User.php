@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'line_id',
+        'access_token',
+        'refresh_token',
+        'expires_in',
     ];
 
     /**
@@ -43,4 +46,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getAccessToken() 
+    {
+        $line_id = auth()->user()->line_id;
+
+        $user = $this
+            ->where('line_id', $line_id)
+            ->first();
+
+        return $user->access_token;
+    }
 }

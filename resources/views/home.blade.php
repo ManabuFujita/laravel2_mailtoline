@@ -7,8 +7,47 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
-        @if ($gmailList->isEmpty())
+        @if (($lineFriendFlag == false) 
+            || ($gmailList->isEmpty()))
+
+            <!-- 初期設定 -->
             <div class="card my-4">
+                <div class="card-header">はじめに</div>
+                <div class="card-body container">
+
+                    @if ($lineFriendFlag == false)
+                    <div class="row">
+                        <span>まずは、LINEの友達登録をしましょう！</span>
+                        <span>↓このLINEアカウントに転送メールが届くようになります。</span>
+                        <div class="py-2">
+                            <div class="line-it-button" data-lang="ja" data-type="friend" data-env="REAL" data-count="false"  data-lineId="{{ config('services.line.talk_channel_id') }}" style="display: none;"></div>
+                            <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+                        </div>
+                    </div>
+                    @else
+
+                    @if ($gmailList->isEmpty())
+                    <div class="row">
+                        <span>次に、転送設定をしたいGmailアカウントでログインしましょう！</span>
+
+                        <a href="{{ route('login.google.redirect') }}">
+                            <img src="{{ asset('img/sign_in_with_google.png') }}" alt="GoogleLogin">
+                        </a>
+                    </div>
+                    @endif
+
+                    @endif
+
+
+
+                </div>
+            </div>
+        @endif
+
+
+
+        @if ($gmailList->isEmpty())
+            <!-- <div class="card my-4">
                 <div class="card-header">はじめに</div>
                 <div class="card-body">
                     まずは、転送設定をしたいGmailアカウントでログインしましょう！<br>
@@ -17,7 +56,7 @@
                         <img src="{{ asset('img/sign_in_with_google.png') }}" alt="GoogleLogin">
                     </a>
                 </div>
-            </div>
+            </div> -->
         @else
             @php
                 $today = new DatetimeImmutable();
@@ -255,7 +294,7 @@
                 </div>
             @endforeach
 
-            <a href="https://line.me/R/oaMessage/%40795qucfw">line</a>
+
 
             <!-- 新規メールアドレス追加 -->
             <div class="card add-email card-add card-mail-list my-4">

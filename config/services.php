@@ -35,6 +35,7 @@ return [
         'client_id' => env('LINE_CHANNEL_ID'),
         'client_secret' => env('LINE_CHANNEL_SECRET'),
         'redirect' => env('APP_URL') . env('LINE_REDIRECT'),
+        'talk_channel_id' => env('LINE_MESSAGING_API_CHANNEL_ID'),
     ],
 
     'google' => [
