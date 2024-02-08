@@ -22,7 +22,7 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/build/{any}', function ($any) {
     $extensions = substr($any, strrpos($any, '.') + 1);
@@ -41,14 +41,9 @@ Route::get('/build/{any}', function ($any) {
 
 
 
-
-// Route::get('login/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line.login');
-
-// Route::group(['middleware' => 'auth'], function() {
-//     Route::any('login/line/callback', function() {
-//         return view('welcome');
-//     });
-// });
+Route::get('/', function () {
+    return view('welcome');
+})->name('top');
 
 
 Route::prefix('login')->name('login.')->group(function() {
@@ -65,17 +60,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 
-// Route::get('/register', function () {
-//     return redirect('login/line/redirect');
-// });
-
-// Route::get('/welcome', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Route::resource('page', PageController::class, ['only' => [
-//     'index', 'show'
-// ]]);
-
-Route::get('page/{page}', [PageController::class, 'show'])
+Route::get('/page/{page}', [PageController::class, 'show'])
     ->name('page.view')
     ->missing(function (Request $request) {
         return redirect('/');
@@ -83,43 +68,31 @@ Route::get('page/{page}', [PageController::class, 'show'])
 
 
 
-Route::get('/', function () {
-    return view('welcome');
 
-    // return redirect('login/line/redirect');
-})->name('top');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Line
-// Route::get('/linelogin', [LineLoginController::class, 'lineLogin'])->name('linelogin');
-// Route::get('/callback', [LineLoginController::class, 'callback'])->name('callback');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::post('/mailfilter', [MailFilterController::class, 'button'])->name('mailfilter');
 Route::post('/mailfilter/delete', [MailFilterController::class, 'delete'])->name('mailfilter.delete');
 
-// Route::get('/list', [TodoListController::class, 'index']);
 
-// Route::get('/test1', [Test1Controller::class, 'index']);
-Route::get('/test1', [Test1Controller::class, 'index2'])->name('root');
-Route::get('/test1/callback', [Test1Controller::class, 'login'])->name('callback');
-
-
-
-// Route::get('/test1/getTemp', [Test1Controller::class, 'getTemp'])->name('temperature');
-// Route::get('/test1/getRain', [Test1Controller::class, 'getRain'])->name('rain');
-// Route::get('/test1/getWeatherChart', [Test1Controller::class, 'getWeatherChart'])->name('weatherChart');
-
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 // require __DIR__.'/auth.php';
+
+
+
 
 Route::fallback(function() {
     // return view('route.error');
