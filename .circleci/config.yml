@@ -60,9 +60,13 @@ jobs:
       # - run:
       #     name: found github actions config
       #     command: ':'
+      - add_ssh_keys:
+          fingerprints:
+            - SHA256:P3RtYB7EzZ056R+iMlUF2ht02wb2U+m2Gi7NI8jJIwU
       - run:
           name: run deploy shell
           command: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "$PROJECT_DIR/deploy.sh"
+
 workflows:
   build-and-test:
     jobs:
