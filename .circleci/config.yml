@@ -62,11 +62,11 @@ jobs:
       #     command: ':'
       - add_ssh_keys:
           fingerprints:
-            - SHA256:P3RtYB7EzZ056R+iMlUF2ht02wb2U+m2Gi7NI8jJIwU
+            - SHA256:TIw7EeZ5LXmxarr7yYrl6Y5DwqexIokXVl4LqiektpI
       - run:
           name: run deploy shell
           # command: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "$PROJECT_DIR/deploy.sh"
-          command: ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $PROJECT_DIR"
+          command: ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "ls"
 
 workflows:
   build-and-test:
@@ -78,4 +78,7 @@ workflows:
       - deploy:
           requires:
             - build-node
+          filters:
+            branches:
+                only: main # only deploy on the main branch
 
