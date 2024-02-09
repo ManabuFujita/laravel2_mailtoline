@@ -65,7 +65,8 @@ jobs:
             - SHA256:P3RtYB7EzZ056R+iMlUF2ht02wb2U+m2Gi7NI8jJIwU
       - run:
           name: run deploy shell
-          command: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "$PROJECT_DIR/deploy.sh"
+          # command: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "$PROJECT_DIR/deploy.sh"
+          command: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST
 
 workflows:
   build-and-test:
