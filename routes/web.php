@@ -50,14 +50,13 @@ Route::prefix('login')->name('login.')->group(function() {
     Route::get('/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line');
     Route::get('/line/callback', [LoginController::class, 'handleLineProviderCallback']);
     
-    Route::get('/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('google.redirect');
-    Route::post('/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('google.redirect');
-    Route::get('/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('google.callback');
-    Route::post('/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('google.callback');
+    Route::match(['get, post'], '/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])
+            ->name('google.redirect');
+    Route::match(['get, post'], '/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])
+            ->name('google.callback');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::post('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::match(['get, post'], '/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 
 Route::get('/page/{page}', [PageController::class, 'show'])
