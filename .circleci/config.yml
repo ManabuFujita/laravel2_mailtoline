@@ -51,7 +51,7 @@ jobs:
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
-      - image: cimg/php:8.2-node
+      - image: cimg/base:stable
     steps:
       # Replace this with steps to deploy to users
       # - run:
