@@ -52,7 +52,7 @@ jobs:
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
-      - image: bitnami/laravel
+      - image: laravelsail/php82-composer
     steps:
       # Replace this with steps to deploy to users
       # - run:
