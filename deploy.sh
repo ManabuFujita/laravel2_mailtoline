@@ -1,5 +1,5 @@
 git pull git@github.com:ManabuFujita/laravel2_mailtoline.git
-# php artisan config:cache
-# php artisan route:cache
-# php artisan view:cache
+/usr/local/bin/php8.2 artisan config:cache
+/usr/local/bin/php8.2 artisan route:cache
+/usr/local/bin/php8.2 artisan view:cache
 
