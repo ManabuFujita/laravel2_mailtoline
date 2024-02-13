@@ -52,7 +52,7 @@ jobs:
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
-      - image: cimg/base:stable
+      - image: bitnami/laravel
     steps:
       # Replace this with steps to deploy to users
       # - run:
