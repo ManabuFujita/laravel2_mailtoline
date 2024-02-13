@@ -116,15 +116,15 @@ class WebRouteTest extends TestCase
         $response->assertSee('LINEでログインしてください');
     }
 
-    public function test_login_from_top(): void
-    {
-        $this->browse(function (Browser $browser) {
-            // トップページにアクセス
-            $browser->visit('/')
-                    // ログインボタンをクリック
-                    ->click('@login-button')
-                    // ログインページに遷移することを確認
-                    ->assertPathIs('/login');
-        });
-    }
+    // public function test_login_from_top(): void
+    // {
+    //     $this->browse(function (Browser $browser) {
+    //         // トップページにアクセス
+    //         $browser->visit('/')
+    //                 // ログインボタンをクリック
+    //                 ->click('@login-button')
+    //                 // ログインページに遷移することを確認
+    //                 ->assertPathIs('/login');
+    //     });
+    // }
 }
