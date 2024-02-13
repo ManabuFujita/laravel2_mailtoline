@@ -68,7 +68,7 @@ jobs:
           name: run deploy shell
           # command: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "$PROJECT_DIR/deploy.sh"
           # command: ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $PROJECT_DIR && ./deploy.sh"
-          command: ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "cd ~/projects/laravel2_mailtoline/; ./deploy.sh; php artisan config:cache"
+          command: ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "ls -al; cd ~/projects/laravel2_mailtoline/; ls -al; ./deploy.sh; php artisan config:cache"
 
 workflows:
   build-and-test:
