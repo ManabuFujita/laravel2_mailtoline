@@ -32,6 +32,10 @@
                                 <li>メールアドレスごとに転送フィルターを設定し、設定したフィルターに該当するメールをLINEに自動転送します</li>
                                 <li>（※転送には5分ほどのタイムラグが発生します）</li>
                             </ul>
+                            <p>以下のメールサービスに対応しています。</p>
+                            <ul>
+                                <li>Gmailのみ（今後、他のメールサービスに対応する予定です）</li>
+                            </ul>
                         </div>
 
                         <div class="row mt-4 pt-4 border-top">
@@ -39,17 +43,13 @@
                             <ol>
                                 <li>LINEアカウントでログインします。</li>
                                 <li>Googleアカウントでログインし、転送フィルターを設定します。</li>
-                                <li>メールが届いたらLINEに転送されます。</li>
+                                <li>Gmailにメールが届いたらLINEに自動転送されます。</li>
                             </ol>
-                            <p>以下のメールサービスに対応しています。</p>
-                            <ul>
-                                <li>Gmailのみ（今後、他のメールサービスに対応する予定です）</li>
-                            </ul>
                         </div>
 
                         <div class="row mt-4 pt-4 border-top text-center">
-                            <p>LINEアカウントでログインしてください</p>
-                            <a href="{{ route('login.line') }}">
+                            <p>はじめに、LINEアカウントでログインしてください</p>
+                            <a href="{{ route('loginPage') }}">
                                 <img src="{{ asset('img/sign_in_with_line.png') }}" alt="LineLogin">
                             </a>
                         </div>

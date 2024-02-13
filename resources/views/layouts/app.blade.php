@@ -41,20 +41,12 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            guest
                             @if (Route::has('login.line'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login.line') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('login.line.redirect') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
                         @else
-                            auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -87,26 +79,17 @@
         <div class="container text-muted">
 
             <div class="col">
-                <div class="row ">
+                <div class="row my-2">
                     <a class="nav-link" href="{{ route('top') }}">Home</a>
                 </div>
-                <div class="row">
+                <div class="row my-2">
                     <a class="nav-link" href="{{ route('page.view', ['page' => 'terms-of-service']) }}">利用規約</a>
                 </div>
-
-                <div class="row">
+                <div class="row my-2">
                     <a class="nav-link" href="{{ route('page.view', ['page' => 'privacy-policy']) }}">プライバシーポリシー</a>
                 </div>
-
             </div>
-            <!-- <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login.line') }}">{{ __('Login') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login.line') }}">プライバシーポリシー</a>
-                </li>
-            </ul> -->
+            
         </div>
         <div class="text-center">
             <small>&copy; {{ config('app.name', 'Laravel') }} 2024</small>

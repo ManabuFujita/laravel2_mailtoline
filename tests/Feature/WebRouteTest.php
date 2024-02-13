@@ -58,13 +58,20 @@ class WebRouteTest extends TestCase
         $response->assertSee('メールをLINEに自動転送するアプリ');
     }
 
+    public function test_top(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertOk();
+        $response->assertViewIs('welcome');
+        $response->assertSee('メールをLINEに自動転送するアプリ');
+    }
+
     public function test_welcome(): void
     {
         $response = $this->get('/welcome');
 
         $response->assertRedirect(Route('top'));
-        // $response->assertViewIs('welcome');
-        // $response->assertSee('メールをLINEに自動転送するアプリ');
     }
 
     public function test_nothing(): void
@@ -72,5 +79,52 @@ class WebRouteTest extends TestCase
         $response = $this->get('/aaa');
 
         $response->assertRedirect(Route('top'));
+    }
+
+
+
+    // 利用規約等
+    public function test_terms_of_service(): void
+    {
+        $response = $this->get('/page/terms-of-service');
+
+        $response->assertOk();
+        $response->assertSee('1. 利用規約の適用');
+    }
+
+    public function test_plivacy_policy(): void
+    {
+        $response = $this->get('/page/privacy-policy');
+
+        $response->assertOk();
+        $response->assertSee('1. 取得するユーザー情報と目的');
+    }
+
+    public function test_page_nothing(): void
+    {
+        $response = $this->get('/page/aaa');
+
+        $response->assertRedirect(Route('top'));
+    }
+
+    // ログイン画面
+    public function test_login(): void
+    {
+        $response = $this->get('/login');
+
+        $response->assertOk();
+        $response->assertSee('LINEでログインしてください');
+    }
+
+    public function test_login_from_top(): void
+    {
+        $this->browse(function (Browser $browser) {
+            // トップページにアクセス
+            $browser->visit('/')
+                    // ログインボタンをクリック
+                    ->click('@login-button')
+                    // ログインページに遷移することを確認
+                    ->assertPathIs('/login');
+        });
     }
 }

@@ -13,8 +13,8 @@
                 </div>
 
                 <div class="card-body card-add-body">
-                    <p>Lineでログインしてください</p>
-                    <a href="{{ route('login.line') }}">
+                    <p>LINEでログインしてください</p>
+                    <a href="{{ route('login.line.redirect') }}">
                         <img src="{{ asset('img/sign_in_with_line.png') }}" alt="LineLogin">
                     </a>
                 </div>

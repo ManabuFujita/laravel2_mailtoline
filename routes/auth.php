@@ -18,15 +18,10 @@ Route::middleware('guest')->group(function () {
 
     // Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::match(['get', 'post'], 'register', function () {
-        return redirect('login');
-    });
+
+    // Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 
-    // // Route::post('login', [AuthenticatedSessionController::class, 'store']);
-    // Route::post('login', function () {
-    //     return redirect('login/line/redirect');
-    // });
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

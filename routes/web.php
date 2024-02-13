@@ -10,6 +10,8 @@ use App\Http\Controllers\LineLoginController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MailFilterController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,78 +24,56 @@ use App\Http\Controllers\PageController;
 |
 */
 
-// Auth::routes();
-
-Route::get('/build/{any}', function ($any) {
-    $extensions = substr($any, strrpos($any, '.') + 1);
-    $mine_type=[
-        "css"=>"text/css",
-        "js"=>"application/javascript"
-    ];
-    if(!array_key_exists($extensions,$mine_type)){
-        return \App::abort(404);
-    }
-    if(!file_exists(public_path() . '/build/'.$any)){
-        return \App::abort(404);
-    }
-    return response(\File::get(public_path() . '/build/'.$any))->header('Content-Type',$mine_type[$extensions]);
-})->where('any', '.*');
-
-
+Auth::routes([
+    'confirm' => false, 
+    'email' => false, 
+    'reset' => false, 
+    'register' => false, 
+]);
 
 Route::get('/', function () {
     return view('welcome');
 })->name('top');
 
 
-Route::prefix('login')->name('login.')->group(function() {
-    Route::get('/line/redirect', [LoginController::class, 'redirectToLineProvider'])->name('line');
-    Route::get('/line/callback', [LoginController::class, 'handleLineProviderCallback']);
-    
-    Route::match(['get, post'], '/google/redirect', [LoginController::class, 'redirectToGoogleProvider'])
-            ->name('google.redirect');
-    Route::match(['get, post'], '/google/callback', [LoginController::class, 'handleGoogleProviderCallback'])
-            ->name('google.callback');
+// ログインページ
+Route::get('/login', function () {
+    return auth()->user()
+        ? redirect(route('home'))
+        : view('auth/login');
+})->name('loginPage');
+
+
+// Lineログイン（認証チェックはcontrollerで実施）
+Route::prefix('/login/line')->name('login.line.')->group(function() {
+    Route::get('/redirect', [LoginController::class, 'redirectToLineProvider'])->name('redirect');
+    Route::get('/callback', [LoginController::class, 'handleLineProviderCallback']);
 });
 
-Route::match(['get, post'], '/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+// メール認証
+Route::prefix('/login/google')->name('login.google.')->group(function() {
+    Route::match(['get', 'post'], '/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('redirect');
+    Route::match(['get', 'post'], '/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('callback');
+});
 
-
+// 利用規約等
 Route::get('/page/{page}', [PageController::class, 'show'])
     ->name('page.view')
     ->missing(function (Request $request) {
-        return redirect('/');
+        return redirect(route('top'));
     });
 
+// 認証後
+Route::middleware('auth')->group(function () {
+    // ホーム
+    Route::match(['get', 'post'], '/home', [HomeController::class, 'index'])->name('home');
 
+    // メールフィルター設定
+    Route::post('/mailfilter', [MailFilterController::class, 'button'])->name('mailfilter');
+    Route::post('/mailfilter/delete', [MailFilterController::class, 'delete'])->name('mailfilter.delete');
+});
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
-
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::post('/mailfilter', [MailFilterController::class, 'button'])->name('mailfilter');
-Route::post('/mailfilter/delete', [MailFilterController::class, 'delete'])->name('mailfilter.delete');
-
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-// require __DIR__.'/auth.php';
-
-
-
-
+// その他のルート
 Route::fallback(function() {
-    // return view('route.error');
-    return redirect('/');
+    return redirect(route('top'));
 });
