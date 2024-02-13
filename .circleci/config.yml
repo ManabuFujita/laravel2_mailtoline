@@ -48,7 +48,7 @@ jobs:
       - run:
           name: run tests
           command: ./vendor/bin/phpunit
-          
+
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
@@ -68,6 +68,7 @@ jobs:
           name: run deploy shell
           # command: ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "$PROJECT_DIR/deploy.sh"
           command: ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $PROJECT_DIR && ./deploy.sh"
+      - run: php artisan config:cache
 
 workflows:
   build-and-test:
