@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'line_id'; // 主キーのカラム名を代入
+    public $incrementing = false; // オートインクリメントを無効に
+    protected $keyType = 'string'; // 主キーの型を文字列に
+    
     /**
      * The attributes that are mass assignable.
      *

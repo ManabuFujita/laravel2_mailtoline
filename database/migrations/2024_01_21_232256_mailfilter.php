@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mailfilters', function (Blueprint $table) {
-            $table->id();
             $table->string('line_id');
             $table->string('email');
             $table->integer('no')->nullable();
@@ -21,7 +20,12 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unique(['line_id', 'email', 'mail_from', 'subject']);
+            // 複合キー
+            // $table->unique(['line_id', 'email', 'mail_from', 'subject']);
+            $table->primary(['line_id', 'email', 'mail_from', 'subject']);
+
+            // 外部キー制約
+            $table->foreign('line_id')->references('line_id')->on('users');
         });
     }
 

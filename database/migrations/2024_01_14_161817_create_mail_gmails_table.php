@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mail_gmails', function (Blueprint $table) {
-            $table->id();
-            $table->string('line_id');
+            $table->string('line_id'); 
             $table->string('email')->nullable();
             $table->string('name')->nullable();;
             $table->timestamp('email_verified_at')->nullable();
@@ -27,7 +26,12 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unique(['line_id', 'email']);
+            // 複合キー
+            // $table->unique(['line_id', 'email']);
+            $table->primary(['line_id', 'email']);
+
+            // 外部キー制約
+            $table->foreign('line_id')->references('line_id')->on('users'); 
         });
     }
 
