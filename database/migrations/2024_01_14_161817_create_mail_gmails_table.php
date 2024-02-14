@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mail_gmails', function (Blueprint $table) {
             $table->string('line_id'); 
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->string('name')->nullable();;
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
