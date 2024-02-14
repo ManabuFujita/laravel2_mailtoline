@@ -21,8 +21,8 @@ return new class extends Migration
             $table->timestamps();
 
             // 複合キー
-            // $table->unique(['line_id', 'email', 'mail_from', 'subject']);
-            $table->primary(['line_id', 'email', 'mail_from', 'subject']);
+            $table->unique(['line_id', 'email', 'mail_from', 'subject']); // null許可できなかったため、ユニーク制約にする
+            // $table->primary(['line_id', 'email', 'mail_from', 'subject']);
 
             // 外部キー制約
             $table->foreign('line_id')->references('line_id')->on('users');
