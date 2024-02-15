@@ -78,7 +78,7 @@
     <footer class="footer mt-auto py-3 navbar-expand-md navbar-light shadow-sm">
         <div class="container text-muted">
             <div class="row">
-                <div class="col-3">
+                <div class="col-md-3">
                     <div class="row my-2 mx-1">
                         <a class="nav-link" href="{{ route('top') }}">Home</a>
                     </div>
@@ -89,7 +89,7 @@
                         <a class="nav-link" href="{{ route('page.view', ['page' => 'privacy-policy']) }}">プライバシーポリシー</a>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-md-3">
                     <div class="row my-2 mx-1">
                     <a class="nav-link" href="{{ route('page.view', ['page' => 'google-auth-error']) }}">Googleアカウント追加時のエラー</a>
                     </div>
