@@ -77,16 +77,22 @@
 
     <footer class="footer mt-auto py-3 navbar-expand-md navbar-light shadow-sm">
         <div class="container text-muted">
-
-            <div class="col">
-                <div class="row my-2">
-                    <a class="nav-link" href="{{ route('top') }}">Home</a>
+            <div class="row">
+                <div class="col-3">
+                    <div class="row my-2 mx-1">
+                        <a class="nav-link" href="{{ route('top') }}">Home</a>
+                    </div>
+                    <div class="row my-2 mx-1">
+                        <a class="nav-link" href="{{ route('page.view', ['page' => 'terms-of-service']) }}">利用規約</a>
+                    </div>
+                    <div class="row my-2 mx-1">
+                        <a class="nav-link" href="{{ route('page.view', ['page' => 'privacy-policy']) }}">プライバシーポリシー</a>
+                    </div>
                 </div>
-                <div class="row my-2">
-                    <a class="nav-link" href="{{ route('page.view', ['page' => 'terms-of-service']) }}">利用規約</a>
-                </div>
-                <div class="row my-2">
-                    <a class="nav-link" href="{{ route('page.view', ['page' => 'privacy-policy']) }}">プライバシーポリシー</a>
+                <div class="col-3">
+                    <div class="row my-2 mx-1">
+                    <a class="nav-link" href="{{ route('page.view', ['page' => 'google-auth-error']) }}">Googleアカウント追加時のエラー</a>
+                    </div>
                 </div>
             </div>
 

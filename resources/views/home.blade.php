@@ -27,9 +27,15 @@
                     @else
 
                     @if ($gmailList->isEmpty())
-                    <div class="row">
+                    <div class="row py-2">
                         <span>次に、転送設定をしたいGmailアカウントでログインしましょう！</span>
-
+                        <span>（現在、Gmailしか対応しておりません）</span>
+                    </div>
+                    <div class="row py-2">
+                        <span style="color: red;">※途中でエラー画面が表示されるため、以下をお読みください。</span>
+                        <a class="" href="{{ route('page.view', ['page' => 'google-auth-error']) }}">Googleアカウント追加時のエラー</a>
+                    </div>
+                    <div class="row py-2">
                         <a href="{{ route('login.google.redirect') }}">
                             <img src="{{ asset('img/sign_in_with_google.png') }}" alt="GoogleLogin">
                         </a>
@@ -306,6 +312,13 @@
                 <div class="card-body card-add-body" style="display: none;">
                     <p>他のメールアドレス宛の転送フィルターを追加できます。</p>
                     <p>（現在、Gmailしか対応しておりません）</p>
+
+                    <div class="row py-3">
+                        <span style="color: red;">※途中でエラー画面が表示されるため、以下をお読みください。</span>
+                        <a class="" href="{{ route('page.view', ['page' => 'google-auth-error']) }}">Googleアカウント追加時のエラー</a>
+                    </div>
+
+
                     <a href="{{ route('login.google.redirect') }}">
                         <img src="{{ asset('img/sign_in_with_google.png') }}" alt="GoogleLogin">
                     </a>
