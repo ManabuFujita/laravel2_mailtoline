@@ -35,15 +35,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('top');
 
-
-// ログインページ
-Route::get('/login', function () {
-    return auth()->user()
-        ? redirect(route('home'))
-        : view('auth/login');
-})->name('loginPage');
-
-
 // Lineログイン（認証チェックはcontrollerで実施）
 Route::prefix('/login/line')->name('login.line.')->group(function() {
     Route::get('/redirect', [LoginController::class, 'redirectToLineProvider'])->name('redirect');
@@ -55,6 +46,13 @@ Route::prefix('/login/google')->name('login.google.')->group(function() {
     Route::match(['get', 'post'], '/redirect', [LoginController::class, 'redirectToGoogleProvider'])->name('redirect');
     Route::match(['get', 'post'], '/callback', [LoginController::class, 'handleGoogleProviderCallback'])->name('callback');
 });
+
+// ログインページ
+Route::get('/login', function () {
+    return auth()->user()
+        ? redirect(route('home'))
+        : view('auth/login');
+})->name('login');
 
 // 利用規約等
 Route::get('/page/{page}', [PageController::class, 'show'])

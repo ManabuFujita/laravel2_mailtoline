@@ -49,7 +49,7 @@
 
                         <div class="row mt-4 pt-4 border-top text-center">
                             <p>はじめに、LINEアカウントでログインしてください</p>
-                            <a href="{{ route('loginPage') }}">
+                            <a href="{{ route('login') }}">
                                 <img src="{{ asset('img/sign_in_with_line.png') }}" alt="LineLogin">
                             </a>
                         </div>

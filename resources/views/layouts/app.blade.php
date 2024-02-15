@@ -41,9 +41,9 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login.line'))
+                            @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login.line.redirect') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
                         @else
@@ -89,7 +89,7 @@
                     <a class="nav-link" href="{{ route('page.view', ['page' => 'privacy-policy']) }}">プライバシーポリシー</a>
                 </div>
             </div>
-            
+
         </div>
         <div class="text-center">
             <small>&copy; {{ config('app.name', 'Laravel') }} 2024</small>

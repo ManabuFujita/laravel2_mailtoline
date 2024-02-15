@@ -112,6 +112,12 @@ class LoginController extends Controller
     {
         $line_user = auth()->user();
 
+        // LineIdを取得できなかったとき
+        if ($line_user == null)
+        {
+            return redirect('home');
+        }
+
         // dd($line_user);
 
         // dd($_COOKIE['g_csrf_token']);
