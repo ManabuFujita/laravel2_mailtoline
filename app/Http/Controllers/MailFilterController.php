@@ -58,6 +58,13 @@ class MailFilterController extends Controller
     {
         $validator = $this->check($request);
 
+        if ($validator->fails()) { // バリデーションエラーがあるなら、
+            // dd($validator);
+            return back()   // 前の画面にリダイレクト
+                ->withInput() // セッション(_old_input)に入力値すべてを入れる
+                ->withErrors($validator); // セッション(errors)にエラーの情報を入れる
+        }
+
         $email = $request->email;
         $mailFrom = $request->mail_from;
         $subject = $request->subject;
