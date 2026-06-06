@@ -38,26 +38,34 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
         require_once base_path('vendor/autoload.php'); // 本番はLinuxのため、\でなく/で指定する
 
-
-
         $lineId = auth()->user()->line_id;
-
 
         // Lineの友達情登録報取得
         $url = 'https://api.line.me/friendship/v1/status';
         // $response = Http::get($url);
 
+        // Lineのアクセストークン取得
         $user = new User();
         
-            
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $user->getAccessToken(),
             ])->get($url);
 
-            
+        // デバッグ用
+        // dd($response->json());
+
+        // トークンの期限切れチェック
+        if (isset($response->json()['message']) 
+            && $response->json()['message'] === 'The access token expired') 
+        {
+            // ログアウトしてログイン画面へ（Lineトークンはリフレッシュできない）
+            auth()->logout();
+            return redirect()->route('login')->with('error', 'LINEのログインが期限切れです。再度ログインしてください。');
+        }
+
+        // デバッグ用
         // dd($response->json()['friendFlag']);
         $lineFriendFlag = $response->json()['friendFlag'];
 
