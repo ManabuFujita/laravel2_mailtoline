@@ -15,6 +15,13 @@
                 <div class="card-header">はじめに</div>
                 <div class="card-body container">
 
+                    {{-- エラーメッセージ（Gmailのトークン有効期限切れで再連携が必要なときなど --}}
+                    @if (session('error') && session('error') != 'register_duplicate')
+                    <div class="alert alert-warning mt-3">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
                     @if ($lineFriendFlag == false)
                     <div class="row">
                         <span>まずは、LINEの友達登録をしましょう！</span>

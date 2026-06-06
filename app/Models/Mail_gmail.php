@@ -105,35 +105,25 @@ class Mail_gmail extends Model
         $token = $this->getToken($email);
         $client = $this->newGmailClient();
 
-        $client->setAccessToken($token);
+        try {
+            $client->setAccessToken($token);
 
-        // If there is no previous token or it's expired.
-        if ($client->isAccessTokenExpired()) {
-            // Refresh the token if possible, else fetch a new one.
-            if ($client->getRefreshToken()) {
-                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-            } else {
-                // Request authorization from the user.
-                $authUrl = $client->createAuthUrl();
-                printf("Open the following link in your browser:\n%s\n", $authUrl);
-                print 'Enter verification code: ';
-                $authCode = trim(fgets(STDIN));
+            if ($client->isAccessTokenExpired()) {
+                if ($client->getRefreshToken()) {
+                    $newToken = $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
 
-                // Exchange authorization code for an access token.
-                $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-                $client->setAccessToken($accessToken);
-
-                // Check to see if there was an error.
-                if (array_key_exists('error', $accessToken)) {
-                    throw new Exception(join(', ', $accessToken));
+                    if (array_key_exists('error', $newToken)) {
+                        // トークン無効→DBから削除してhomeへ
+                        throw new \Exception('invalid_grant'); // 削除処理はしない、例外を投げるだけ
+                    }
                 }
             }
-            // Save the token to a file.
-            // if (!file_exists(dirname($tokenPath))) {
-            //     mkdir(dirname($tokenPath), 0700, true);
-            // }
-            // file_put_contents($tokenPath, json_encode($client->getAccessToken()));
-        } else {
+        } catch (\Google\Service\Exception $e) {
+            // Google APIエラー→DBから削除してhomeへ
+            $this->where('line_id', auth()->user()->line_id)
+                ->where('email', $email)
+                ->delete();
+            return redirect('/home')->with('error', 'Googleアカウントでエラーが発生しました。再度連携してください。');
         }
         
         return $client;
@@ -163,6 +153,13 @@ class Mail_gmail extends Model
                 'expires_in' => $expiresIn,
                 'created' => $created,
             ]);
+    }
+
+    public function revokeToken($email)
+    {
+        $this->where('line_id', auth()->user()->line_id)
+            ->where('email', $email)
+            ->delete();
     }
 
     private function datetimeFormat2timestamp($datetime_format)
