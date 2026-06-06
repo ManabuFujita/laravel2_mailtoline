@@ -65,6 +65,15 @@ class HomeController extends Controller
             return redirect()->route('login')->with('error', 'LINEのログインが期限切れです。再度ログインしてください。');
         }
 
+        // その他のトークンのエラー処理
+        if (isset($response->json()['message']) 
+            && $response->json()['message'] === 'invalid token') 
+        {
+            // ログアウトしてログイン画面へ（Lineトークンはリフレッシュできない）
+            auth()->logout();
+            return redirect()->route('login')->with('error', 'LINEのトークンが不正な値です。再度ログインしてください。');
+        }
+
         // デバッグ用
         // dd($response->json()['friendFlag']);
         $lineFriendFlag = $response->json()['friendFlag'];
