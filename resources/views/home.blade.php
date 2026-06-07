@@ -233,40 +233,48 @@
 
                                         <!-- 送信ボタン -->
                                         <div class="row container px-0 mt-3 pt-4 border-top">
-                                            <div class="col-2 col-button">
-                                                <button class="btn btn-secondary rounded-2" type="submit" name="test">① 確認</button>
-                                            </div>
                                             <div class="col">
-                                                <div class="row">
-                                                    <span>上記のフィルター設定でメールを正しく抽出できるか確認できます</span>
-                                                    <span>（抽出結果が多くなりすぎないよう、抽出期間を指定して確認ボタンを押してください）</span>
-                                                </div>
+                                                <span>上記のフィルター設定でメールを正しく抽出できるか確認できます</span>
+                                            </div>
+                                        </div>
 
-                                                <div class="container mt-3">
-                                                    <div class="row input-group input-group-sm mb-3">
-                                                        <div class="col px-0">
-                                                            <label class="input-group-text test-term" for="start">抽出期間（確認用）</label>
-                                                        </div>                                                        
-                                                        <div class="col px-0">
-                                                            <input type="date" id="start" class="form-control" name="term_start" value="{{ old('term_start', $oneMonthAgo->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" /> 
-                                                        </div>                                                        
-                                                        <div class="col px-0" style="max-width: 40px;">
-                                                            <label class="input-group-text test-term" for="end">～</label>
-                                                        </div>
-                                                        <div class="col px-0">
-                                                            <input type="date" id="end" class="form-control" name="term_end" value="{{ old('term_end', $today->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" /> 
-                                                        </div>
+                                        <!-- 抽出期間 -->
+                                        <div class="row container px-0 mt-2">
+                                            <div class="container mt-2">
+                                                <div class="row input-group input-group-sm mb-3">
+                                                    <div class="col-auto px-0">
+                                                        <label class="input-group-text test-term" for="start">抽出期間（確認用）</label>
+                                                    </div>
+                                                    <div class="col px-0">
+                                                        <input type="date" id="start" class="form-control" name="term_start" value="{{ old('term_start', $oneMonthAgo->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" />
+                                                    </div>
+                                                    <div class="col-auto px-0">
+                                                        <label class="input-group-text test-term">～</label>
+                                                    </div>
+                                                    <div class="col px-0">
+                                                        <input type="date" id="end" class="form-control" name="term_end" value="{{ old('term_end', $today->format('Y-m-d')) }}" max="{{$today->format('Y-m-d')}}" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row container px-0 mt-2 pt-4 border-top">
-                                            <div class="col-2 col-button">
-                                                <button class="btn btn-secondary rounded-2" type="submit" name="register">② 登録</button>
-                                            </div>
 
-                                            <div class="col">
-                                                <span>「確認」して問題なければ登録してください</span>
+                                        <!-- ①確認ボタン（日付の下） -->
+                                        <div class="row container px-0 mt-2">
+                                            <div class="col-auto mb-2">
+                                                <button class="btn btn-theme-outline rounded-2" type="submit" name="test">① 確認</button>
+                                            </div>
+                                            <div class="col-12">
+                                                <span>抽出期間を指定して確認ボタンを押してください。抽出結果が表示されます。</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- ②登録ボタン -->
+                                        <div class="row container px-0 mt-4 pt-4 border-top">
+                                            <div class="col-auto mb-2">
+                                                <button class="btn btn-theme-outline rounded-2" type="submit" name="register">② 登録</button>
+                                            </div>
+                                            <div class="col-12">
+                                                <span>①確認後、問題がなければ登録してください</span>
                                             </div>
                                         </div>
 

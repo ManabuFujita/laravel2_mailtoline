@@ -352,4 +352,16 @@ nav.navbar {
   margin: 20px auto;
 }
 
+/* 確認ボタン、登録ボタンなど */
+.btn-theme-outline {
+    background-color: white;
+    color: #80BCBD;
+    border: 2px solid #80BCBD;
+    padding: 6px 8px !important; 
+    white-space: nowrap;
+}
 
+.btn-theme-outline:hover {
+    background-color: #80BCBD;
+    color: white;
+}
