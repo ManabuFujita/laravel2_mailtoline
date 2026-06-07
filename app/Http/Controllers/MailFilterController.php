@@ -156,6 +156,7 @@ class MailFilterController extends Controller
         }
         $filter .= ' after:' . $dateStart->format('Y/m/d') . ' before:' . $dateEnd->format('Y/m/d');
 
+        // デバッグ用
         // dd($filter);
 
         $optParams['q'] = $filter;
@@ -170,6 +171,7 @@ class MailFilterController extends Controller
 
         $test = true;
 
+        // デバッグ用
         // dd($filter_test_results);
 
         // dd($resultsCount);
