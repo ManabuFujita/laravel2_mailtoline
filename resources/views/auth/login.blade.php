@@ -13,7 +13,16 @@
                 </div>
 
                 <div class="card-body card-add-body">
+
+                    {{-- トークンの有効期限切れ等のエラー時 --}}
+                    @if (session('error'))
+                        <div class="alert alert-warning">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <p>LINEでログインしてください</p>
+
                     <a href="{{ route('login.line.redirect') }}">
                         <img src="{{ asset('img/sign_in_with_line.png') }}" alt="LineLogin">
                     </a>

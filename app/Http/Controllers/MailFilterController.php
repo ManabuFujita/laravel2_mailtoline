@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Mailfilter;
 use App\Models\Mail_gmail;
+use App\Services\GmailService;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -14,6 +15,7 @@ use DateTimeInterface;
 // use Google_Service_Gmail;
 use Google\Client;
 use Google\Service\Gmail;
+use Google\Service\Exception;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 use Zoo;
 
@@ -98,8 +100,6 @@ class MailFilterController extends Controller
                 ->withErrors($validator); // セッション(errors)にエラーの情報を入れる
         }
 
-
-
         $email = $request->email;
 
         // dd($email);
@@ -108,7 +108,17 @@ class MailFilterController extends Controller
         // $token = $gmail->getToken($email);
 
         // 必要があれば処理を続ける
-        $client = $gmail->getGmailClient($email);
+        try {
+            $client = $gmail->getGmailClient($email);
+        } catch (\Exception $e) {
+            // DBからトークンを削除して、再連携させる
+            return (new GmailService())->handleAuthError($email);
+        }
+
+        // redirectが返ってきた場合（エラーの場合、redirectを返すようにしている）
+        if ($client instanceof \Illuminate\Http\RedirectResponse) {
+            return $client;
+        }
 
         // 今日受信した対象メールを取得
         // $client = getClient();
@@ -146,14 +156,22 @@ class MailFilterController extends Controller
         }
         $filter .= ' after:' . $dateStart->format('Y/m/d') . ' before:' . $dateEnd->format('Y/m/d');
 
+        // デバッグ用
         // dd($filter);
 
         $optParams['q'] = $filter;
-        $filter_test_results = $service->users_messages->listUsersMessages($user, $optParams);
+        try {
+            $filter_test_results = $service->users_messages->listUsersMessages($user, $optParams);
+        } catch (Exception $e) {
+            // DBからトークンを削除して、再連携させる
+            return (new GmailService())->handleAuthError($email);
+        }
+
         $resultsCount = $filter_test_results['resultSizeEstimate'];
 
         $test = true;
 
+        // デバッグ用
         // dd($filter_test_results);
 
         // dd($resultsCount);
