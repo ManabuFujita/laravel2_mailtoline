@@ -11,6 +11,8 @@ use App\Services\GmailService;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateInterval;
+use DateTimeZone;
 // use Google_Client;
 // use Google_Service_Gmail;
 use Google\Client;
@@ -154,7 +156,11 @@ class MailFilterController extends Controller
         {
             $filter .= ' subject:' . $subject . '';
         }
-        $filter .= ' after:' . $dateStart->format('Y/m/d') . ' before:' . $dateEnd->format('Y/m/d');
+        // Gmailの日付指定(after:/before: YYYY/MM/DD)はUTCの日境界で評価されるため、
+        // JST(+9h)とずれて開始日・終了日のメールが取りこぼされる。
+        // Unixタイムスタンプで指定することでJSTの正確な時刻境界で絞り込む。
+        // before:はその時刻を含まないため、term_end当日を含めるために1日後の0時を指定する。
+        $filter .= ' after:' . $dateStart->getTimestamp() . ' before:' . $dateEnd->add(new DateInterval('P1D'))->getTimestamp();
 
         // デバッグ用
         // dd($filter);
@@ -220,7 +226,7 @@ class MailFilterController extends Controller
                 // 配列にセット
                 array_push($filter_test_list, [
                     'subject' => $subject,
-                    'date' => DateTime::createFromFormat(DateTimeInterface::RFC2822, $date)->format('Y/m/d H:i:s'),
+                    'date' => DateTime::createFromFormat(DateTimeInterface::RFC2822, $date)->setTimezone(new DateTimeZone('Asia/Tokyo'))->format('Y/m/d H:i:s'),
                     'from' => $from,
                     'to' => $to,
                 ]);
