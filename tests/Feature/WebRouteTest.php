@@ -127,4 +127,54 @@ class WebRouteTest extends TestCase
     //                 ->assertPathIs('/login');
     //     });
     // }
+
+    // LINEログインへのリダイレクト（未ログイン）
+    public function test_login_line_redirect(): void
+    {
+        $response = $this->get(route('login.line.redirect'));
+
+        $response->assertRedirect();
+        $this->assertStringContainsString('access.line.me', $response->headers->get('Location'));
+    }
+
+    // Googleログインへのリダイレクト（未ログイン）
+    public function test_login_google_redirect(): void
+    {
+        $response = $this->get('/login/google/redirect');
+
+        $response->assertRedirect();
+        $this->assertStringContainsString('accounts.google.com', $response->headers->get('Location'));
+    }
+
+    // Googleログインのコールバック（未ログイン状態でアクセスした場合）
+    public function test_login_google_callback_without_login(): void
+    {
+        $response = $this->get(route('login.google.callback'));
+
+        $response->assertRedirect('/home');
+    }
+
+    // 認証が必要なページ（未ログイン）
+    public function test_home_requires_login(): void
+    {
+        $response = $this->get('/home');
+
+        $response->assertRedirect(route('login'));
+    }
+
+    // メールフィルター設定（未ログイン）
+    public function test_mailfilter_requires_login(): void
+    {
+        $response = $this->post('/mailfilter');
+
+        $response->assertRedirect(route('login'));
+    }
+
+    // メールフィルター削除（未ログイン）
+    public function test_mailfilter_delete_requires_login(): void
+    {
+        $response = $this->post('/mailfilter/delete');
+
+        $response->assertRedirect(route('login'));
+    }
 }
